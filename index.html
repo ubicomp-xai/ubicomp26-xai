@@ -144,13 +144,13 @@
       .hero-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2.5rem;
         align-items: center;
       }
       @media (min-width: 992px) {
         .hero-grid {
-          grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-          gap: 4rem;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+          gap: 3rem;
         }
       }
       .hero-figure {
@@ -159,19 +159,15 @@
         align-items: center;
         position: relative;
       }
-      .hero-figure svg { width: 100%; max-width: 420px; height: auto; }
+      .hero-figure img {
+        width: 100%;
+        height: auto;
+        display: block;
+        max-width: none;
+        mix-blend-mode: multiply; /* lets the image's parchment blend with the page */
+      }
       @media (max-width: 540px) {
-        .hero-figure svg { max-width: 280px; }
-      }
-      .hero-figure__caption {
-        position: absolute; left: 0; bottom: -1.5rem;
-        font-family: 'Inter Tight', sans-serif;
-        font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-        color: var(--muted);
-      }
-      .hero-figure__caption::before {
-        content: ""; display: inline-block; width: 24px; height: 1px;
-        background: var(--muted); margin-right: 0.5rem; vertical-align: middle;
+        .hero-figure img { max-width: 480px; margin-inline: auto; }
       }
       .hero-eyebrow {
         font-family: 'Inter Tight', sans-serif;
@@ -540,69 +536,8 @@
               <a class="cta cta--ghost" href="#schedule">View schedule</a>
             </div>
           </div>
-          <div class="hero-figure" aria-hidden="true">
-            <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" role="img">
-              <title>An opaque model opens to reveal its internal structure; signals resolve into a visible explanation.</title>
-              <defs>
-                <pattern id="hero-grid-pat" x="0" y="0" width="36" height="36" patternUnits="userSpaceOnUse">
-                  <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#d9d4ca" stroke-width="0.5"/>
-                </pattern>
-              </defs>
-              <rect width="360" height="360" fill="url(#hero-grid-pat)" opacity="0.55"/>
-
-              <!-- Isometric "model" cube, half-transparent -->
-              <g stroke="#1a1a1a" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <!-- visible front edges -->
-                <path d="M 100 210 L 200 210 L 200 300 L 100 300 Z" stroke-width="1.4"/>
-                <path d="M 100 210 L 145 175 L 245 175 L 200 210" stroke-width="1.4"/>
-                <path d="M 200 210 L 245 175 L 245 265 L 200 300" stroke-width="1.4"/>
-                <!-- hidden (back) edges, dashed -->
-                <path d="M 100 300 L 145 265 L 245 265" stroke-width="1" stroke-dasharray="3 3" opacity="0.45"/>
-                <path d="M 145 265 L 145 175" stroke-width="1" stroke-dasharray="3 3" opacity="0.45"/>
-              </g>
-
-              <!-- Internal nodes (the "revealed" interior) -->
-              <g stroke="#1a1a1a" stroke-width="0.85" fill="none" opacity="0.55">
-                <line x1="135" y1="240" x2="180" y2="225"/>
-                <line x1="180" y1="225" x2="215" y2="200"/>
-                <line x1="180" y1="225" x2="170" y2="275"/>
-                <line x1="135" y1="240" x2="170" y2="275"/>
-              </g>
-              <g>
-                <circle cx="135" cy="240" r="3" fill="#1a1a1a"/>
-                <circle cx="180" cy="225" r="3" fill="#1a1a1a"/>
-                <circle cx="170" cy="275" r="3" fill="#1a1a1a"/>
-                <circle cx="215" cy="200" r="3.5" fill="#d94a2c"/>
-              </g>
-
-              <!-- Input signals from the left, dashed (data going in) -->
-              <g stroke="#1a1a1a" stroke-width="0.9" fill="none" stroke-dasharray="4 3" stroke-linecap="round" opacity="0.55">
-                <line x1="30" y1="230" x2="100" y2="232"/>
-                <line x1="30" y1="255" x2="100" y2="255"/>
-                <line x1="30" y1="280" x2="100" y2="278"/>
-              </g>
-
-              <!-- Output explanation: signals fanning up & right to a constellation -->
-              <g stroke-width="1.4" fill="none" stroke-linecap="round">
-                <path d="M 175 175 C 175 130, 195 95, 220 75" stroke="#1a1a1a"/>
-                <path d="M 200 175 C 200 130, 240 90, 275 75" stroke="#d94a2c"/>
-                <path d="M 220 178 C 220 145, 280 125, 320 110" stroke="#1a1a1a"/>
-              </g>
-              <g>
-                <circle cx="220" cy="75" r="4" fill="#1a1a1a"/>
-                <circle cx="275" cy="75" r="5" fill="#d94a2c"/>
-                <circle cx="320" cy="110" r="4" fill="#1a1a1a"/>
-              </g>
-
-              <!-- Hairline label rule, top-right -->
-              <g stroke="#5a5a52" stroke-width="0.5" opacity="0.7">
-                <line x1="220" y1="55" x2="320" y2="55"/>
-                <line x1="220" y1="55" x2="220" y2="50"/>
-                <line x1="320" y1="55" x2="320" y2="50"/>
-              </g>
-              <text x="270" y="46" text-anchor="middle" font-family="Inter Tight, sans-serif" font-size="9" fill="#5a5a52" letter-spacing="0.14em" style="text-transform: uppercase;">Explanation</text>
-            </svg>
-            <span class="hero-figure__caption">Fig. 01 &middot; opening the box</span>
+          <div class="hero-figure">
+            <img src="assets/img/hero.jpg" alt="A line-drawn box opens; its internal signals flow outward and resolve into a structured explanation graph." width="1600" height="893" />
           </div>
         </div>
       </div>
