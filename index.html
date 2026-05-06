@@ -141,7 +141,14 @@
         border-bottom: 1px solid var(--hairline);
       }
       .masthead .container { max-width: 1240px; }
-      .hero-content { padding-top: 7rem; } /* text alone clears the fixed navbar */
+      .hero-content {
+        padding-top: 7rem; /* text alone clears the fixed navbar */
+        text-align: center;
+      }
+      .hero-content .hero-eyebrow,
+      .hero-content .hero-meta,
+      .hero-content .hero-actions { justify-content: center; }
+      .hero-content .hero-subtitle { margin-left: auto; margin-right: auto; }
       .hero-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -166,7 +173,7 @@
          visible edge anywhere. */
       @media (min-width: 992px) {
         .hero-grid {
-          grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+          grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
           gap: 2rem;
         }
         .hero-figure {
@@ -174,6 +181,11 @@
           grid-row: 1;
           margin-left: calc(50% - 50vw + 1rem);
           margin-right: 0;
+        }
+        .hero-figure img {
+          max-width: 640px;
+          margin-left: auto;
+          margin-right: auto;
         }
         .hero-content {
           grid-column: 2;
@@ -939,6 +951,10 @@
                 <i class="fa-brands fa-linkedin-in">
                 </i>
               </a>
+              <a class="btn btn-dark btn-social mx-2" href="https://scholar.google.com/citations?user=vCqZb34AAAAJ&hl=en">
+                <i class="fa-brands fa-google-scholar">
+                </i>
+              </a>
             </div>
           </div>
           <div class="col-lg-3 col-md-6">
@@ -961,6 +977,10 @@
               </a>
               <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/youssef-mahmoud-youssef/">
                 <i class="fa-brands fa-linkedin-in">
+                </i>
+              </a>
+              <a class="btn btn-dark btn-social mx-2" href="https://scholar.google.com/citations?user=8EtKuAoAAAAJ&hl=en">
+                <i class="fa-brands fa-google-scholar">
                 </i>
               </a>
             </div>
