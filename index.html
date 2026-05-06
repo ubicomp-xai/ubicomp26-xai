@@ -26,26 +26,369 @@
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.5.2/js/all.js" crossorigin="anonymous">
     </script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-    rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"
-    rel="stylesheet" type="text/css" />
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600;1,9..144,700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <style>
-      .card { width: 100%; height: 150px; perspective: 1000px; } .card-inner
-      { width: 100%; height: 100%; transition: transform 0.6s; transform-style:
-      preserve-3d; } .card:hover .card-inner, .card.flip .card-inner { transform:
-      rotateY(180deg); } .card-front, .card-back { width: 100%; height: 100%;
-      position: absolute; backface-visibility: hidden; display: flex; justify-content:
-      center; align-items: center; } .card-front { background-color: #f5f5f5;
-      } .card-back { background-color: #e6e6e6; transform: rotateY(180deg); }
-      .row:not(:last-child) { margin-bottom: 20px;}
+      /* ── XAI for U 2026 — editorial design system ────────────────── */
+      :root {
+        --paper:   #f7f3ec;
+        --surface: #ffffff;
+        --ink:     #1a1a1a;
+        --muted:   #5a5a52;
+        --accent:  #d94a2c;
+        --hairline:#d9d4ca;
+      }
+
+      /* paper-grain texture, ~2% opacity, served inline */
+      body {
+        background-color: var(--paper);
+        color: var(--ink);
+        font-family: 'Inter Tight', system-ui, sans-serif;
+        font-size: 17px;
+        line-height: 1.6;
+        font-feature-settings: "ss01", "cv11";
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      }
+      .bg-light { background-color: var(--surface) !important; }
+
+      /* ── Typography ───────────────────────────────────────────────── */
+      h1, h2, h3, h4, .display, .team-member h4 {
+        font-family: 'Fraunces', Georgia, serif;
+        font-feature-settings: "ss01", "ss02";
+        color: var(--ink);
+      }
+      .eyebrow {
+        font-family: 'Inter Tight', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .section-heading {
+        font-family: 'Fraunces', serif !important;
+        font-size: clamp(2rem, 1.4rem + 1.6vw, 3rem) !important;
+        font-weight: 600 !important;
+        font-variation-settings: "opsz" 72;
+        text-transform: none !important;
+        letter-spacing: -0.01em;
+        margin-top: 0.25rem;
+      }
+      .section-subheading { color: var(--muted); }
+      a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+      a:hover { color: var(--accent); }
+      .text-muted { color: var(--muted) !important; }
+      code { color: var(--accent); background: rgba(217, 74, 44, 0.08); padding: 1px 6px; border-radius: 3px; font-size: 0.92em; }
+      .num { font-variant-numeric: tabular-nums; }
+
+      /* ── Navbar override (Bootstrap was navbar-dark on a transparent bar) ── */
+      #mainNav {
+        background-color: rgba(247, 243, 236, 0.92);
+        backdrop-filter: saturate(140%) blur(8px);
+        border-bottom: 1px solid var(--hairline);
+        box-shadow: none;
+      }
+      #mainNav .navbar-brand,
+      #mainNav .nav-link {
+        color: var(--ink) !important;
+        font-family: 'Inter Tight', sans-serif !important;
+        font-weight: 500;
+        text-transform: none !important;
+        letter-spacing: 0;
+      }
+      #mainNav .navbar-brand { font-family: 'Fraunces', serif !important; font-weight: 600; font-style: italic; }
+      #mainNav .nav-link:hover, #mainNav .nav-link.active { color: var(--accent) !important; }
       #pastEditionsDropdown + .dropdown-menu {
         text-shadow: none !important;
         text-align: center;
+        background: var(--surface);
+        border: 1px solid var(--hairline);
       }
+
+      /* ── Masthead hero ────────────────────────────────────────────── */
+      .masthead {
+        background: var(--paper) !important;
+        background-image: none !important;
+        color: var(--ink);
+        min-height: 88vh;
+        display: flex;
+        align-items: center;
+        padding: 8rem 0 4rem;
+        border-bottom: 1px solid var(--hairline);
+      }
+      .masthead .container { max-width: 980px; }
+      .hero-eyebrow {
+        font-family: 'Inter Tight', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1.25rem;
+        display: flex; align-items: center; gap: 0.75rem;
+      }
+      .hero-eyebrow::before {
+        content: ""; display: inline-block; width: 36px; height: 1px; background: var(--ink);
+      }
+      .hero-title {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-weight: 600;
+        font-size: clamp(4rem, 3rem + 5vw, 7.5rem);
+        line-height: 0.95;
+        letter-spacing: -0.025em;
+        margin: 0 0 1.5rem;
+        font-variation-settings: "opsz" 144;
+      }
+      .hero-subtitle {
+        font-family: 'Fraunces', serif;
+        font-weight: 400;
+        font-size: clamp(1.25rem, 1rem + 0.6vw, 1.6rem);
+        line-height: 1.35;
+        max-width: 780px;
+        color: var(--ink);
+        margin-bottom: 2rem;
+      }
+      .hero-meta {
+        display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2.5rem;
+        font-family: 'Inter Tight', sans-serif;
+      }
+      .pill {
+        display: inline-flex; align-items: center;
+        padding: 0.4rem 0.9rem;
+        border-radius: 999px;
+        font-size: 14px; font-weight: 500;
+        border: 1px solid var(--ink);
+        color: var(--ink);
+        background: transparent;
+      }
+      .pill--accent {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: transparent;
+      }
+      .pill--accent::before {
+        content: ""; display: inline-block; width: 7px; height: 7px;
+        margin-right: 0.5rem; border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(217, 74, 44, 0.18);
+      }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center; }
+
+      /* ── CTAs (replace global yellow .btn-primary) ───────────────── */
+      .cta {
+        display: inline-flex; align-items: center; gap: 0.6rem;
+        padding: 0.9rem 1.4rem;
+        font-family: 'Inter Tight', sans-serif;
+        font-weight: 500;
+        font-size: 15px;
+        text-decoration: none;
+        background: var(--ink);
+        color: var(--paper);
+        border: 1px solid var(--ink);
+        border-radius: 0;
+        transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+        position: static !important;
+      }
+      .cta:hover { background: var(--accent); border-color: var(--accent); color: #fff; transform: translate(0, -1px); }
+      .cta--ghost { background: transparent; color: var(--ink); }
+      .cta--ghost:hover { background: var(--ink); color: var(--paper); }
+      .cta[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
+
+      /* ── Section spacing & headings ───────────────────────────────── */
+      section.page-section, section { padding: 6rem 0; }
+      section + section, section.page-section + section { border-top: 1px solid var(--hairline); }
+      .section-rule {
+        width: 48px; height: 1px; background: var(--ink);
+        margin: 0 auto 1.25rem;
+      }
+
+      /* ── Editorial: About abstract ────────────────────────────────── */
+      #about p.text-muted {
+        font-size: clamp(1.05rem, 1rem + 0.25vw, 1.2rem);
+        line-height: 1.65;
+        color: var(--ink) !important;
+        max-width: 720px; margin: 0 auto;
+      }
+      #about p.text-muted::first-letter {
+        font-family: 'Fraunces', serif;
+        font-weight: 700;
+        font-size: 4em;
+        float: left;
+        line-height: 0.85;
+        margin: 0.05em 0.12em 0 0;
+        color: var(--accent);
+      }
+
+      /* ── CFP: numbered editorial grid (replaces flip cards) ───────── */
+      .topic-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin: 2rem 0 1.5rem;
+        border-top: 1px solid var(--hairline);
+      }
+      @media (min-width: 768px) { .topic-grid { grid-template-columns: 1fr 1fr; } }
+      .topic {
+        display: grid;
+        grid-template-columns: 64px 1fr;
+        gap: 1.25rem;
+        padding: 1.5rem 0.5rem;
+        border-bottom: 1px solid var(--hairline);
+      }
+      @media (min-width: 768px) {
+        .topic:nth-child(odd) { border-right: 1px solid var(--hairline); padding-right: 1.5rem; }
+        .topic:nth-child(even) { padding-left: 1.5rem; }
+      }
+      .topic__num {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-weight: 500;
+        font-size: 2rem;
+        color: var(--accent);
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+      .topic__title {
+        font-family: 'Fraunces', serif;
+        font-weight: 600;
+        font-size: 1.15rem;
+        line-height: 1.25;
+        margin: 0 0 0.35rem;
+      }
+      .topic__body { font-size: 0.95rem; color: var(--muted); margin: 0; }
+
+      /* ── CFP cards (Paper format / Dates / Submission) ────────────── */
+      #cfp .row.text-center { margin-top: 3rem; }
+      #cfp .col-md-4 {
+        text-align: left;
+        padding: 1.75rem;
+        border: 1px solid var(--hairline);
+        background: var(--surface);
+        margin-bottom: 1rem;
+      }
+      #cfp .col-md-4 + .col-md-4 { border-left: none; }
+      @media (max-width: 767px) { #cfp .col-md-4 + .col-md-4 { border-left: 1px solid var(--hairline); border-top: none; } }
+      #cfp .col-md-4 .fa-stack { display: none !important; }
+      #cfp .col-md-4 h4 {
+        font-family: 'Fraunces', serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0 0 1rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 1px solid var(--hairline);
+      }
+      #cfp .col-md-4 p { font-size: 0.94rem; }
+      #cfp .col-md-4 p u { text-decoration: none; color: var(--muted); font-style: italic; font-size: 0.85rem; letter-spacing: 0.03em; }
+      #cfp .deadline-hard { color: var(--accent); font-weight: 600; }
+
+      /* ── Schedule: vertical time-rail ─────────────────────────────── */
+      #schedule .table { display: none; }
+      .timerail {
+        max-width: 760px; margin: 2.5rem auto 0;
+        border-left: 1px solid var(--hairline);
+        padding-left: 0;
+      }
+      .timerail__row {
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        gap: 1.5rem;
+        padding: 1.1rem 0 1.1rem 1.5rem;
+        position: relative;
+      }
+      .timerail__row + .timerail__row { border-top: 1px solid var(--hairline); }
+      .timerail__row::before {
+        content: ""; position: absolute; left: -4px; top: 1.4rem;
+        width: 7px; height: 7px; border-radius: 50%; background: var(--ink);
+      }
+      .timerail__row--accent::before { background: var(--accent); box-shadow: 0 0 0 4px rgba(217,74,44,0.18); }
+      .timerail__time { font-variant-numeric: tabular-nums; font-weight: 500; color: var(--muted); padding-top: 0.1rem; }
+      .timerail__event {
+        font-family: 'Fraunces', serif;
+        font-weight: 500;
+        font-size: 1.1rem;
+        color: var(--ink);
+      }
+      .timerail__note { display: block; font-family: 'Inter Tight', sans-serif; font-weight: 400; font-size: 0.92rem; color: var(--muted); margin-top: 0.25rem; }
+
+      /* ── Keynote (Speakers) ───────────────────────────────────────── */
+      #portfolio .portfolio-item {
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        padding: 2rem;
+      }
+      #portfolio .portfolio-item img.speaker-img-crop {
+        width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+        border: 1px solid var(--hairline);
+      }
+      #portfolio .portfolio-caption-heading {
+        font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.55rem;
+        margin-top: 1.25rem;
+      }
+      #portfolio .portfolio-caption-subheading.text-muted {
+        font-family: 'Inter Tight', sans-serif !important;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 12px !important;
+        font-style: normal !important;
+      }
+      #portfolio .portfolio-caption-subheading b { font-family: 'Fraunces', serif; font-weight: 500; font-style: italic; font-size: 1.05rem; }
+      #portfolio .portfolio-hover { display: none; }
+      .portfolio-modal h2 { font-family: 'Fraunces', serif !important; font-weight: 600; }
+
+      /* ── Team ─────────────────────────────────────────────────────── */
+      #team .team-member { text-align: center; margin-bottom: 2rem; }
+      #team .team-member img {
+        width: 140px; height: 140px; object-fit: cover;
+        border: 1px solid var(--hairline);
+        margin-bottom: 1rem;
+      }
+      #team .team-member h4 {
+        font-family: 'Fraunces', serif;
+        font-size: 1.15rem; font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+      #team .team-member p { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.6rem; }
+      #team .team-member .btn-dark {
+        background: transparent !important;
+        border: none !important;
+        color: var(--ink) !important;
+        width: auto; height: auto; padding: 0.25rem;
+        box-shadow: none !important;
+      }
+      #team .team-member .btn-dark:hover { color: var(--accent) !important; background: transparent !important; }
+      #team h2.section-heading { margin-top: 0; }
+      #team .section-subheading { font-family: 'Inter Tight', sans-serif; font-style: italic; color: var(--muted); margin-bottom: 2rem; }
+
+      /* ── Acknowledgements (renamed section) ───────────────────────── */
+      #acknowledgements { background: var(--surface); }
+      #acknowledgements p { max-width: 640px; margin-left: auto; margin-right: auto; }
+      #acknowledgements a { color: var(--ink); }
+      #acknowledgements a:hover { color: var(--accent); }
+
+      /* ── Contact ──────────────────────────────────────────────────── */
+      #contact .section-subheading {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-size: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+        color: var(--ink);
+      }
+
+      /* ── Footer ───────────────────────────────────────────────────── */
+      .footer {
+        background: var(--paper);
+        border-top: 1px solid var(--hairline);
+        font-family: 'Inter Tight', sans-serif;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      /* ── Defensive: kill the global .btn-primary footgun ──────────── */
+      .btn-primary { position: static !important; transform: none !important; }
     </style>
   </head>
   
@@ -64,7 +407,7 @@
           </i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+          <ul class="navbar-nav ms-auto py-4 py-lg-0">
             <li class="nav-item">
               <a class="nav-link" href="#about">
                 About
@@ -111,23 +454,34 @@
     <!-- Masthead-->
     <header class="masthead">
       <div class="container">
-        <a class="btn btn-primary btn-xl text-uppercase" href="#about">
-          Tell Me More
-        </a>
+        <div class="hero-eyebrow">3rd International Workshop &middot; UbiComp/ISWC 2026</div>
+        <h1 class="hero-title">XAI for U <span style="color: var(--accent);">2026</span></h1>
+        <p class="hero-subtitle">
+          Explainable AI for Ubiquitous, Pervasive and Wearable Computing.
+          A workshop on transparency for AI systems embedded in the things we wear, carry, and live with.
+        </p>
+        <div class="hero-meta">
+          <span class="pill"><span class="num">11&ndash;12 October 2026</span>&nbsp;&middot;&nbsp;Shanghai, China</span>
+          <span class="pill pill--accent">Submissions opening soon</span>
+        </div>
+        <div class="hero-actions">
+          <a class="cta" href="#cfp">Read the Call for Papers <span aria-hidden="true">&rarr;</span></a>
+          <a class="cta cta--ghost" href="#schedule">View schedule</a>
+        </div>
       </div>
     </header>
     <!-- About -->
     <section class="page-section" id="about">
       <div class="container">
         <div class="row">
-          <div class="col">
-          </div>
-          <div class="col-8 text-center">
-            <h2 class="section-heading text-uppercase">
-              XAI for U 2026: 3rd International Workshop on Explainable AI for Ubiquitous, Pervasive and Wearable Computing
+          <div class="col-12 col-lg-10 mx-auto text-center">
+            <div class="section-rule"></div>
+            <div class="eyebrow">About the workshop</div>
+            <h2 class="section-heading">
+              Transparency for AI in the things we wear, carry, and live with.
             </h2>
-            <h4 class="section-subheading text-muted">
-              In conjunction with UbiComp/ISWC'26 — Shanghai, China — 11-12 October 2026
+            <h4 class="section-subheading">
+              <i>In conjunction with UbiComp/ISWC&rsquo;26 &middot; Shanghai, China &middot; 11&ndash;12 October 2026</i>
             </h4>
             <p class="text-muted text-lg-center">
               The XAI for U workshop addresses the need for transparency in AI systems
@@ -143,156 +497,76 @@
               better aligned with user expectations and ethical standards.
             </p>
           </div>
-          <div class="col">
-          </div>
         </div>
-        <!-- <div class="row">
-        <div class="col-12 text-center">
-        <p>
-        List of accepted papers can be found <a href="https://github.com/ubicomp-xai/ubicomp-xai.github.io/raw/737ac233349a2d03cf01a153ee464c736c584721/assets/Sorted_Paper_Titles_and_Authors.pdf">here</a>
-        </p>
-        </div> -->
+      </div>
     </section>
     <!-- cfp-->
     <section class="page-section bg-light" id="cfp">
       <div class="container">
         <div class="row">
-          <div class="col">
-          </div>
-          <div class="col-9 text-center">
-            <h2 class="section-heading text-uppercase">
-              Call For Papers
-            </h2>
-            <p class="section-subheading text-muted text-lg-start">
-              We invite submissions of original research, insightful case studies, and
-              work in progress that address XAI applications within Ubiquitous and Wearable
-              Computing, including but not limited to:
-              </h3>
-              <div class="container">
-                <div class="row">
-                  <div class="col-sm-12 col-md-6">
-                    <div class="card" onclick="toggleFlip(this)">
-                      <div class="card-inner">
-                        <div class="card-front">
-                          <h5>
-                            XAI for time-series, multimodal and sensor-based models
-                          </h5>
-                        </div>
-                        <div class="card-back">
-                          <p>
-                            Explanation methods tailored to wearable and IoT settings, including
-                            multivariate time-series and heterogeneous sensor streams.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6">
-                    <div class="card" onclick="toggleFlip(this)">
-                      <div class="card-inner">
-                        <div class="card-front">
-                          <h5>
-                            Interpretability of interconnected ML pipelines
-                          </h5>
-                        </div>
-                        <div class="card-back">
-                          <p>
-                            Explaining end-to-end pipelines (pre-processing, segmentation, classification)
-                            rather than individual models in isolation.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6">
-                    <div class="card" onclick="toggleFlip(this)">
-                      <div class="card-inner">
-                        <div class="card-front">
-                          <h5>
-                            User-centred, personalised and context-aware explanations
-                          </h5>
-                        </div>
-                        <div class="card-back">
-                          <p>
-                            Explanation strategies that adapt to user needs, context, and the dynamic
-                            environments typical of ubiquitous systems.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6">
-                    <div class="card" onclick="toggleFlip(this)">
-                      <div class="card-inner">
-                        <div class="card-front">
-                          <h5>
-                            Evaluation of XAI: user studies, faithfulness, trust calibration
-                          </h5>
-                        </div>
-                        <div class="card-back">
-                          <p>
-                            Empirical evaluation of explanations, including faithfulness metrics,
-                            user studies, and over- or under-reliance on decision-support tools.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6">
-                    <div class="card" onclick="toggleFlip(this)">
-                      <div class="card-inner">
-                        <div class="card-front">
-                          <h5>
-                            On-device deployment, privacy, fairness and governance
-                          </h5>
-                        </div>
-                        <div class="card-back">
-                          <p>
-                            Deploying XAI on resource-constrained wearable devices, with attention
-                            to privacy, fairness, and alignment with the EU AI Act.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6">
-                    <div class="card" onclick="toggleFlip(this)">
-                      <div class="card-inner">
-                        <div class="card-front">
-                          <h5>
-                            XAI for health, well-being, activity recognition and smart environments
-                          </h5>
-                        </div>
-                        <div class="card-back">
-                          <p>
-                            Domain applications of XAI in healthcare, mental health, human activity
-                            recognition, and smart-home/smart-environment systems.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6">
-                    <div class="card" onclick="toggleFlip(this)">
-                      <div class="card-inner">
-                        <div class="card-front">
-                          <h5>
-                            Symbolic, neuro-symbolic and LLM-driven explanation generation
-                          </h5>
-                        </div>
-                        <div class="card-back">
-                          <p>
-                            Approaches that combine symbolic reasoning, neuro-symbolic models, and
-                            LLMs for generating and verbalising explanations.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+          <div class="col-12 col-lg-10 mx-auto">
+            <div class="text-center">
+              <div class="section-rule"></div>
+              <div class="eyebrow">Topics of Interest</div>
+              <h2 class="section-heading">
+                Call for Papers
+              </h2>
+              <p class="section-subheading">
+                Original research, insightful case studies, and work-in-progress on XAI
+                approaches for ubiquitous and wearable computing, including but not limited to:
+              </p>
+            </div>
+            <div class="topic-grid">
+              <div class="topic">
+                <div class="topic__num">01</div>
+                <div>
+                  <h5 class="topic__title">XAI for time-series, multimodal and sensor-based models</h5>
+                  <p class="topic__body">Explanation methods tailored to wearable and IoT settings, including multivariate time-series and heterogeneous sensor streams.</p>
                 </div>
               </div>
-          </div>
-          <div class="col">
+              <div class="topic">
+                <div class="topic__num">02</div>
+                <div>
+                  <h5 class="topic__title">Interpretability of interconnected ML pipelines</h5>
+                  <p class="topic__body">Explaining end-to-end pipelines (pre-processing, segmentation, classification) rather than individual models in isolation.</p>
+                </div>
+              </div>
+              <div class="topic">
+                <div class="topic__num">03</div>
+                <div>
+                  <h5 class="topic__title">User-centred, personalised and context-aware explanations</h5>
+                  <p class="topic__body">Explanation strategies that adapt to user needs, context, and the dynamic environments typical of ubiquitous systems.</p>
+                </div>
+              </div>
+              <div class="topic">
+                <div class="topic__num">04</div>
+                <div>
+                  <h5 class="topic__title">Evaluation of XAI: user studies, faithfulness, trust calibration</h5>
+                  <p class="topic__body">Empirical evaluation of explanations, including faithfulness metrics, user studies, and over- or under-reliance on decision-support tools.</p>
+                </div>
+              </div>
+              <div class="topic">
+                <div class="topic__num">05</div>
+                <div>
+                  <h5 class="topic__title">On-device deployment, privacy, fairness and governance</h5>
+                  <p class="topic__body">Deploying XAI on resource-constrained wearable devices, with attention to privacy, fairness, and alignment with the EU AI Act.</p>
+                </div>
+              </div>
+              <div class="topic">
+                <div class="topic__num">06</div>
+                <div>
+                  <h5 class="topic__title">XAI for health, well-being, activity recognition and smart environments</h5>
+                  <p class="topic__body">Domain applications of XAI in healthcare, mental health, human activity recognition, and smart-home/smart-environment systems.</p>
+                </div>
+              </div>
+              <div class="topic">
+                <div class="topic__num">07</div>
+                <div>
+                  <h5 class="topic__title">Symbolic, neuro-symbolic and LLM-driven explanation generation</h5>
+                  <p class="topic__body">Approaches that combine symbolic reasoning, neuro-symbolic models, and LLMs for generating and verbalising explanations.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row text-center">
@@ -363,7 +637,7 @@
             </p>
             <p class="text-muted">
               Camera-ready deadline:<br>
-              <u>Full (6 pages)</u>:<b> July 31, 2026</b><br>
+              <u>Full (6 pages)</u>:<b class="deadline-hard"> July 31, 2026</b> <small>(ACM DL hard deadline)</small><br>
               <u>Short (4 pages) &amp; Poster abstracts</u>:<b> August 15, 2026</b>
             </p>
             <p class="text-muted">
@@ -401,13 +675,13 @@
               <code>XAIforU2026_poster_ntekouli.pdf</code>).
             </p>
             <p>
-              <a class="btn btn-dark disabled" aria-disabled="true"
+              <a class="cta cta--ghost" aria-disabled="true"
                  href="https://usi365-my.sharepoint.com/:f:/g/personal/bombafr_usi_ch/IgBH69_hapVTS50WG4gDI22XAUSY23SmV1-sASqyh4p45gU"
                  target="_blank" rel="noopener">
-                Submit your paper
+                Submit your paper <span aria-hidden="true">&rarr;</span>
               </a>
               <br>
-              <small class="text-muted">(activates once submissions are open)</small>
+              <small class="text-muted">activates once submissions are open</small>
             </p>
             <p class="text-muted">
               For registration information, fees, and deadlines, please visit
@@ -420,102 +694,24 @@
     <!-- Schedule-->
     <section id="schedule">
       <div class="container">
-        <div class="col-lg-12 text-center">
+        <div class="text-center">
+          <div class="section-rule"></div>
+          <div class="eyebrow">11&ndash;12 October 2026</div>
           <h2 class="section-heading">
             Schedule
           </h2>
-          <hr class="primary">
-          <p class="text-muted">
-            Tentative schedule. The full programme will be finalised after the notification of acceptance.
-          </p>
+          <p class="section-subheading"><i>Tentative &mdash; the full programme will be finalised after the notification of acceptance.</i></p>
         </div>
-        <div class="col-lg-12 text-left">
-          <table class="table table-striped">
-            <thead class="thead-default">
-              <tr>
-                <th>
-                  Time
-                </th>
-                <th>
-                  Event
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th class="text-nowrap" scope="row">
-                  09:00 - 09:15
-                </th>
-                <td>
-                  Welcome
-                </td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">
-                  09:15 - 10:00
-                </th>
-                <td>
-                  Keynote by Prof. Jat Singh + Q&amp;A
-                </td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">
-                  10:00 - 10:30
-                </th>
-                <td>
-                  Oral presentations &mdash; Part 1
-                </td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">
-                  10:30 - 11:00
-                </th>
-                <td>
-                  Coffee break + Poster tour
-                </td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">
-                  11:00 - 11:30
-                </th>
-                <td>
-                  Oral presentations &mdash; Part 2
-                </td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">
-                  11:30 - 12:15
-                </th>
-                <td>
-                  Breakout group discussions (3-4 themes)
-                </td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">
-                  12:15 - 12:30
-                </th>
-                <td>
-                  Group read-out (2-3 slides each)
-                </td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">
-                  12:30 - 12:45
-                </th>
-                <td>
-                  Conclusion and farewell
-                </td>
-              </tr>
-              <tr>
-                <th class="text-nowrap" scope="row">
-                  12:45 - 14:00
-                </th>
-                <td>
-                  Lunch break
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="timerail">
+          <div class="timerail__row"><div class="timerail__time">09:00 &mdash; 09:15</div><div class="timerail__event">Welcome</div></div>
+          <div class="timerail__row timerail__row--accent"><div class="timerail__time">09:15 &mdash; 10:00</div><div class="timerail__event">Keynote by Prof. Jat Singh<span class="timerail__note">University of Cambridge &middot; RC-Trust, University Alliance Ruhr &mdash; followed by Q&amp;A</span></div></div>
+          <div class="timerail__row"><div class="timerail__time">10:00 &mdash; 10:30</div><div class="timerail__event">Oral presentations &mdash; Part 1</div></div>
+          <div class="timerail__row"><div class="timerail__time">10:30 &mdash; 11:00</div><div class="timerail__event">Coffee break + Poster tour</div></div>
+          <div class="timerail__row"><div class="timerail__time">11:00 &mdash; 11:30</div><div class="timerail__event">Oral presentations &mdash; Part 2</div></div>
+          <div class="timerail__row timerail__row--accent"><div class="timerail__time">11:30 &mdash; 12:15</div><div class="timerail__event">Breakout group discussions<span class="timerail__note">3&ndash;4 themes drawn from the keynote and morning presentations</span></div></div>
+          <div class="timerail__row"><div class="timerail__time">12:15 &mdash; 12:30</div><div class="timerail__event">Group read-out<span class="timerail__note">2&ndash;3 slides per group, presented to the full audience</span></div></div>
+          <div class="timerail__row"><div class="timerail__time">12:30 &mdash; 12:45</div><div class="timerail__event">Conclusion and farewell</div></div>
+          <div class="timerail__row"><div class="timerail__time">12:45 &mdash; 14:00</div><div class="timerail__event">Lunch break</div></div>
         </div>
       </div>
     </section>
@@ -523,8 +719,10 @@
     <section class="page-section bg-light" id="portfolio">
   <div class="container">
     <div class="text-center">
-      <h2 class="section-heading text-uppercase">
-        Keynote Speaker
+      <div class="section-rule"></div>
+      <div class="eyebrow">Invited Talk</div>
+      <h2 class="section-heading">
+        Keynote
       </h2>
     </div>
     <div class="row justify-content-center">
@@ -554,7 +752,9 @@
     <section class="page-section" id="team">
       <div class="container">
         <div class="text-center">
-          <h2 class="section-heading text-uppercase">
+          <div class="section-rule"></div>
+          <div class="eyebrow">Who is behind the workshop</div>
+          <h2 class="section-heading">
             Organising Committee
           </h2>
         </div>
@@ -662,11 +862,11 @@
             </div>
           </div>
         </div>
-        <div class="text-center">
-          <h2 class="section-heading text-uppercase">
+        <div class="text-center" style="margin-top: 4rem;">
+          <h2 class="section-heading">
             Steering Committee
           </h2>
-          <h3 class="section-subheading text-muted">Ensuring continuity with prior editions and broader UbiComp expertise.</h3>
+          <h3 class="section-subheading">Ensuring continuity with prior editions and broader UbiComp expertise.</h3>
         </div>
         <div class="row">
           <div class="col-lg-4">
@@ -754,35 +954,29 @@
         </div>
     </section>
     <!-- Acknowledgements -->
-    <section class="page-section bg-light" id="portfolio">
+    <section class="page-section" id="acknowledgements">
       <div class="container">
         <div class="row">
-          <div class="col">
-          </div>
           <div class="col-12 text-center">
-            <h2 class="section-heading text-uppercase">
-              Acknowledgement
+            <div class="section-rule"></div>
+            <div class="eyebrow">With support from</div>
+            <h2 class="section-heading">
+              Acknowledgements
             </h2>
-            <h4 class="section-subheading text-muted">
-              We acknowledge the financial support for this workshop from:
+            <h4 class="section-subheading">
+              <i>We gratefully acknowledge the financial support for this workshop:</i>
             </h4>
             <p class="text-muted">
-              Swiss National Science Foundation (SNSF), Project XAI-PAC: Towards Explainable
-              and Private Affective Computing (PZ00P2_216405)
+              Swiss National Science Foundation (SNSF) &mdash; Project XAI-PAC: Towards
+              Explainable and Private Affective Computing (PZ00P2_216405)
             </p>
-            <p class="text-muted"></p>
-              <a href="https://www.h-brs.de/en/center-assistive-technologies-rhein-ruhr">
-              Ministerium für Kultur und Wissenschaft (MKW) des Landes Nordrhein-Westfalen
-              (NRW), "Profilbildung 2022" project: Zentrum Assistive Technologien Rhein-Ruhr
+            <p class="text-muted">
+              <a href="https://www.h-brs.de/en/center-assistive-technologies-rhein-ruhr" target="_blank" rel="noopener">
+                Ministerium f&uuml;r Kultur und Wissenschaft (MKW) des Landes
+                Nordrhein-Westfalen (NRW) &mdash; &ldquo;Profilbildung 2022&rdquo; project:
+                Zentrum Assistive Technologien Rhein-Ruhr
               </a>
             </p>
-            <!-- <li class="text-muted">
-              <a href="https://gepris.dfg.de/gepris/projekt/438445824">
-                Deutsche Forschungsgemeinschaft (DFG): TRR 318/1 2021 – 438445824
-              </a>
-            </li> -->
-          </div>
-          <div class="col">
           </div>
         </div>
       </div>
@@ -791,11 +985,13 @@
     <section class="page-section" id="contact">
       <div class="container">
         <div class="text-center">
-          <h2 class="section-heading text-uppercase">
-            Contact Us
+          <div class="section-rule"></div>
+          <div class="eyebrow">Get in touch</div>
+          <h2 class="section-heading">
+            Contact
           </h2>
-          <h3 class="section-subheading text-muted">
-            francesco.bombassei.de.bona@usi.ch
+          <h3 class="section-subheading">
+            <a href="mailto:francesco.bombassei.de.bona@usi.ch">francesco.bombassei.de.bona@usi.ch</a>
           </h3>
         </div>
         < <!-- Footer-->
@@ -830,7 +1026,7 @@
                   <div class="row justify-content-center">
                     <div class="col-lg-8">
                       <div class="modal-body">
-                        <h2 class="text-uppercase">
+                        <h2>
                           Prof. Jat Singh
                         </h2>
                         <p>
@@ -872,11 +1068,6 @@
           <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
           * * * * * * *-->
           <!-- <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
-          <script>
-            function toggleFlip(card) {
-              card.classList.toggle('flip');
-            }
-          </script>
   </body>
 
 </html>
