@@ -10964,7 +10964,6 @@ header.masthead {
   position: relative;
   /* padding-top: 10.5rem;
   padding-bottom: 10rem; */
-  height: 100vh;
   width: 100%;
   min-height: auto;
   text-align: center;
@@ -10998,8 +10997,8 @@ header.masthead .masthead-heading {
 @media (min-width: 768px) {
   header.masthead {
     min-height: 100%;
-    padding-top: 10rem;
-    padding-bottom: 10.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
   header.masthead .masthead-subheading {
 
