@@ -418,6 +418,15 @@ section + section, section.page-section + section { border-top: 1px solid var(--
 #acknowledgements a:hover { color: var(--accent); }
 
 /* ── Contact ──────────────────────────────────────────────────── */
+/* Override the Agency theme's dark teal default on #contact: keep
+   parchment + ink for consistency with the rest of the page. */
+#contact {
+  background: var(--paper) !important;
+  background-image: none !important;
+  color: var(--ink);
+}
+#contact .section-heading,
+#contact .eyebrow { color: var(--ink); }
 #contact .section-subheading {
   font-family: 'Inter Tight', sans-serif;
   font-weight: 500;
@@ -425,6 +434,8 @@ section + section, section.page-section + section { border-top: 1px solid var(--
   font-size: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
   color: var(--ink);
 }
+#contact .section-subheading a { color: var(--ink); }
+#contact .section-subheading a:hover { color: var(--accent); }
 
 /* ── Footer ───────────────────────────────────────────────────── */
 .footer {
