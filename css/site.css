@@ -430,8 +430,9 @@ section + section, section.page-section + section { border-top: 1px solid var(--
   font-family: 'Inter Tight', sans-serif;
   font-weight: 500;
   letter-spacing: -0.02em;
-  font-size: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+  font-size: clamp(1rem, 0.9rem + 0.35vw, 1.25rem);
   color: var(--paper) !important;
+  margin-top: 1rem;
 }
 #contact .section-subheading a {
   color: var(--paper);
