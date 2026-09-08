@@ -318,6 +318,24 @@ section + section, section.page-section + section { border-top: 1px solid var(--
 #cfp .col-md-4 p u { text-decoration: none; color: var(--muted); font-style: italic; font-size: 0.85rem; letter-spacing: 0.03em; }
 #cfp .deadline-hard { color: var(--accent); font-weight: 600; }
 
+/* ── CFP closing notice (shown while the cards row is d-none) ──── */
+.cfp-notice {
+  margin-top: 3rem;
+  padding: 2.5rem 2rem;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-top: 3px solid var(--accent);
+}
+.cfp-notice h4 {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.cfp-notice p { color: var(--muted); max-width: 44rem; margin: 0 auto 1rem; }
+.cfp-notice .cta { margin-top: 0.5rem; }
+
 /* ── Schedule: vertical time-rail ─────────────────────────────── */
 #schedule .table { display: none; }
 .timerail {
