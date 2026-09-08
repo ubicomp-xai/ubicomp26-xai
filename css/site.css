@@ -320,7 +320,7 @@ section + section, section.page-section + section { border-top: 1px solid var(--
 
 /* ── CFP closing notice (shown while the cards row is d-none) ──── */
 .cfp-notice {
-  margin-top: 3rem;
+  margin-top: 5.5rem;
   padding: 2.5rem 2rem;
   background: var(--surface);
   border: 1px solid var(--hairline);
@@ -335,6 +335,29 @@ section + section, section.page-section + section { border-top: 1px solid var(--
 }
 .cfp-notice p { color: var(--muted); max-width: 44rem; margin: 0 auto 1rem; }
 .cfp-notice .cta { margin-top: 0.5rem; }
+
+/* ── Schedule: date card ──────────────────────────────────────── */
+.schedule-datecard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  max-width: 30rem;
+  margin: 0 auto 3.5rem;
+  padding: 1.75rem 2rem;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-top: 3px solid var(--accent);
+  text-align: center;
+}
+.schedule-datecard__date {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.schedule-datecard__hours { font-size: 1.05rem; color: var(--muted); }
+.schedule-datecard__note { display: block; font-size: 0.9rem; color: var(--muted); }
 
 /* ── Schedule: vertical time-rail ─────────────────────────────── */
 #schedule .table { display: none; }
