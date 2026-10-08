@@ -547,3 +547,6 @@ section + section, section.page-section + section { border-top: 1px solid var(--
   .paper { grid-template-columns: 32px 1fr; gap: 0.9rem; }
   .paper__num { font-size: 1.1rem; }
 }
+.timerail__talks { margin: 0.5rem 0 0; padding: 0; list-style: none; }
+.timerail__talks li { display: grid; grid-template-columns: 3rem 1fr; gap: 0.5rem; padding: 0.2rem 0; }
+.timerail__talks .num { font-variant-numeric: tabular-nums; font-weight: 500; }
